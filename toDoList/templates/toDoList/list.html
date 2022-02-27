@@ -1,0 +1,24 @@
+{% extends "toDoList/base.html" %}
+
+{% block title %}List{% endblock title %}
+
+{% block content %}
+
+<h1>{{ls.name}}</h1>
+<form method="POST" action="#">
+  {% csrf_token %}
+  <ul>
+    {% for item in ls.item_set.all %}
+      {% if item.complete == True %}
+        <li style="text-decoration: line-through;"><input type="checkbox" value="clicked" name="c{{item.id}}" checked>{{item.text}}</li>
+      {% else %}
+         <li style="text-decoration: none;"><input type="checkbox" value="clicked" name="c{{item.id}}">{{item.text}}</li> 
+      {% endif %}
+    {% endfor %}
+  </ul>
+  <button type="submit" name="save" value="save">Save</button>
+  <input type="text" name="new">
+  <button type="submit" name="newItem" value="newItem">Add Item</button>
+</form>
+
+{% endblock %}
